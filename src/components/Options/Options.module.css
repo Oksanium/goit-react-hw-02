@@ -1,0 +1,13 @@
+.btns {
+  display: flex;
+  gap: 16px;
+  padding-left: 100px;
+}
+.clean {
+  font-size: 16px;
+  color: white;
+  background-color: #ccc;
+}
+.reset {
+  background-color: #e4e8fc;
+}
