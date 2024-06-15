@@ -1,45 +1,51 @@
 import css from "./Options.module.css";
 
-export default function Options({ feedback, setFeedback, stats }) {
-  function updFeedback(e) {
-    const key = e.target.value;
-    if (key === "reset") {
-      setFeedback({
-        good: 0,
-        neutral: 0,
-        bad: 0,
-      });
-    } else {
-      setFeedback({ ...feedback, [key]: ++feedback[key] });
-    }
-  }
+export default function Options({
+  feedback,
+  setFeedback,
+  stats,
+  updFeedback,
+  resetFeedback,
+}) {
+  // function updFeedback(e) {
+  //   const key = e.target.value;
+  //   if (key === "reset") {
+  //     setFeedback({
+  //       good: 0,
+  //       neutral: 0,
+  //       bad: 0,
+  //     });
+  //   } else {
+  //     setFeedback({ ...feedback, [key]: feedback[key] + 1 });
+  //   }
+  // }
+  const handleClick = (e) => {
+    updFeedback(e.target.value);
+  };
 
   return (
     <div className={css.btns}>
-      <button onClick={updFeedback} value="good">
+      <button onClick={handleClick} value="good">
         Good
       </button>
-      <button onClick={updFeedback} value="neutral">
+      <button onClick={handleClick} value="neutral">
         Neutral
       </button>
-      <button onClick={updFeedback} value="bad">
+      <button onClick={handleClick} value="bad">
         Bad
       </button>
 
-      {Boolean(stats) && (
-        <button onClick={updFeedback} value="reset" className={css.reset}>
+      {stats > 0 && (
+        <button
+          onClick={() => {
+            resetFeedback();
+          }}
+          value="reset"
+          className={css.reset}
+        >
           Reset
         </button>
       )}
-
-      <button
-        onClick={() => {
-          localStorage.removeItem("userFeedback");
-        }}
-        className={css.clean}
-      >
-        clean local storage
-      </button>
     </div>
   );
 }

@@ -22,13 +22,35 @@ function App() {
     localStorage.setItem("userFeedback", JSON.stringify(feedback));
   }, [feedback]);
 
+  function updFeedback(value) {
+    setFeedback({ ...feedback, [value]: feedback[value] + 1 });
+  }
+
+  function resetFeedback() {
+    setFeedback({
+      good: 0,
+      neutral: 0,
+      bad: 0,
+    });
+  }
+
   const stats = feedback.good + feedback.bad + feedback.neutral;
+  const positive = Math.round((feedback.good / stats) * 100);
 
   return (
     <>
       <Description />
-      <Options feedback={feedback} setFeedback={setFeedback} stats={stats} />
-      {stats ? <Feedback {...feedback} /> : <Notification />}
+      <Options
+        feedback={feedback}
+        updFeedback={updFeedback}
+        stats={stats}
+        resetFeedback={resetFeedback}
+      />
+      {stats ? (
+        <Feedback {...feedback} total={stats} positive={positive} />
+      ) : (
+        <Notification />
+      )}
     </>
   );
 }
